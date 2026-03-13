@@ -4,9 +4,12 @@
 
 'use strict';
 
+const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // ── 1. MATRIX RAIN ──────────────────────────────────────────────────────────
 
 (function initMatrixRain() {
+  if (REDUCE_MOTION) return;
   const canvas = document.getElementById('matrix-rain');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -63,6 +66,7 @@
 // ── 2. FLOATING PARTICLES ───────────────────────────────────────────────────
 
 (function initParticles() {
+  if (REDUCE_MOTION) return;
   const container = document.getElementById('particles');
   if (!container) return;
 
