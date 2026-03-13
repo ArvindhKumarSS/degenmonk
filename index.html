@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Degen Monk — Enlightened speculation. Diamond hands, empty mind." />
+  <meta name="theme-color" content="#0a0a0f" />
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Degen Monk" />
+  <meta property="og:description" content="Enlightened speculation. Diamond hands, empty mind." />
+  <meta property="og:type"        content="website" />
+
+  <title>Degen Monk ☯</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ░░ MATRIX RAIN CANVAS ░░ -->
+  <canvas id="matrix-rain" aria-hidden="true"></canvas>
+
+  <!-- ░░ FLOATING PARTICLES ░░ -->
+  <div id="particles" aria-hidden="true"></div>
+
+  <!-- ░░ SITE WRAPPER ░░ -->
+  <div class="site-wrapper">
+
+    <!-- ══════════════════════════════
+         HERO SECTION
+    ══════════════════════════════ -->
+    <header role="banner">
+
+      <!-- Incense smoke (decorative) -->
+      <div class="incense-container" aria-hidden="true">
+        <div class="smoke-stick">
+          <div class="smoke-thread"></div>
+          <div class="smoke-thread"></div>
+          <div class="smoke-thread"></div>
+        </div>
+        <div class="smoke-stick">
+          <div class="smoke-thread"></div>
+          <div class="smoke-thread"></div>
+        </div>
+      </div>
+
+      <!-- Candle -->
+      <div class="candle-container" aria-hidden="true">
+        <div class="candle-flame">
+          <div class="flame-outer"></div>
+          <div class="flame-inner"></div>
+        </div>
+        <div class="candle-wick"></div>
+        <div class="candle-body"></div>
+      </div>
+
+      <!-- Title -->
+      <h1 class="hero-title">Degen Monk</h1>
+
+      <div class="hero-divider" aria-hidden="true"></div>
+
+      <!-- Rotating subtitle -->
+      <p class="hero-subtitle" id="hero-subtitle" aria-live="polite">
+        ☯  ENLIGHTENED SPECULATION  ☯
+      </p>
+
+      <!-- Tagline -->
+      <p class="hero-tagline">
+        Where the candlestick meets the candle flame.<br />
+        Where rekt meets enlightened.
+      </p>
+
+      <!-- Scroll down indicator -->
+      <div class="scroll-indicator" aria-hidden="true">SCROLL</div>
+
+    </header>
+
+    <!-- ══════════════════════════════
+         MAIN — DAILY SCROLL
+    ══════════════════════════════ -->
+    <main>
+      <section id="daily-scroll" aria-labelledby="scroll-title">
+
+        <p class="section-label" aria-hidden="true">Daily Transmission</p>
+
+        <article class="scroll-card">
+
+          <!-- Card Header -->
+          <div class="scroll-card-header">
+            <span class="date-badge" id="date-badge">—</span>
+            <h2 class="scroll-title" id="scroll-title">Loading...</h2>
+          </div>
+
+          <!-- Card Body — typing effect target -->
+          <div class="scroll-card-body">
+            <p id="scroll-content" aria-live="polite"></p>
+          </div>
+
+          <!-- Card Footer — mantra -->
+          <footer class="scroll-card-footer">
+            <blockquote id="mantra"></blockquote>
+          </footer>
+
+        </article>
+
+      </section>
+    </main>
+
+    <!-- ══════════════════════════════
+         SITE FOOTER
+    ══════════════════════════════ -->
+    <footer role="contentinfo">
+      <div class="footer-inner">
+        <div class="footer-sigil" aria-hidden="true">☯</div>
+        <p class="footer-mantra">
+          Not financial advice. Not spiritual advice. Not advice.
+        </p>
+        <p class="footer-meta">DEGEN MONK &nbsp;·&nbsp; EST. BLOCK 0 &nbsp;·&nbsp; ∞</p>
+      </div>
+    </footer>
+
+  </div><!-- /site-wrapper -->
+
+  <script src="script.js"></script>
+</body>
+</html>

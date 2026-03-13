@@ -1,0 +1,226 @@
+/* ===========================
+   DEGEN MONK — script.js
+   =========================== */
+
+'use strict';
+
+// ── 1. MATRIX RAIN ──────────────────────────────────────────────────────────
+
+(function initMatrixRain() {
+  const canvas = document.getElementById('matrix-rain');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const CHARS = '₿ΞΩψ∞☯◈฿✦龍禅道卍ム工ヲソノハユキ01';
+  const charArr = CHARS.split('').filter(c => c.trim());
+
+  let columns = [];
+  const FONT_SIZE = 16;
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const colCount = Math.floor(canvas.width / FONT_SIZE);
+    columns = Array.from({ length: colCount }, () => ({
+      y:     Math.random() * canvas.height,
+      speed: 0.5 + Math.random() * 1.5,
+    }));
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(10, 10, 15, 0.04)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = `${FONT_SIZE}px "Share Tech Mono", monospace`;
+
+    columns.forEach((col, i) => {
+      const char = charArr[Math.floor(Math.random() * charArr.length)];
+      const x = i * FONT_SIZE;
+
+      // Leading character is bright
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(char, x, col.y);
+
+      // Trail characters in green
+      ctx.fillStyle = '#39ff14';
+      const trailChar = charArr[Math.floor(Math.random() * charArr.length)];
+      ctx.fillText(trailChar, x, col.y - FONT_SIZE);
+
+      col.y += col.speed * FONT_SIZE;
+      if (col.y > canvas.height + FONT_SIZE * 5) {
+        col.y = -FONT_SIZE * Math.random() * 10;
+        col.speed = 0.5 + Math.random() * 1.5;
+      }
+    });
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  setInterval(draw, 50);
+})();
+
+
+// ── 2. FLOATING PARTICLES ───────────────────────────────────────────────────
+
+(function initParticles() {
+  const container = document.getElementById('particles');
+  if (!container) return;
+
+  const SYMBOLS = ['✦', '◈', '☯', '✧', '⬡', '◆', '❋', '✿'];
+
+  function spawnParticle() {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    el.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+
+    const size    = 8 + Math.random() * 14;
+    const left    = Math.random() * 100;
+    const duration = 6 + Math.random() * 10;
+    const drift   = (Math.random() - 0.5) * 120;
+    const hue     = Math.random() > 0.5 ? '#9d4edd' : '#ffd700';
+
+    el.style.cssText = `
+      left: ${left}%;
+      font-size: ${size}px;
+      color: ${hue};
+      --drift: ${drift}px;
+      animation-duration: ${duration}s;
+      animation-delay: ${Math.random() * 3}s;
+      filter: drop-shadow(0 0 4px ${hue});
+      text-shadow: 0 0 8px ${hue};
+    `;
+
+    container.appendChild(el);
+    setTimeout(() => el.remove(), (duration + 3) * 1000);
+  }
+
+  // Spawn regularly
+  setInterval(spawnParticle, 800);
+  // Initial burst
+  for (let i = 0; i < 8; i++) setTimeout(spawnParticle, i * 200);
+})();
+
+
+// ── 3. HERO SUBTITLE ROTATOR ────────────────────────────────────────────────
+
+(function initSubtitleRotator() {
+  const el = document.getElementById('hero-subtitle');
+  if (!el) return;
+
+  const lines = [
+    '☯  ENLIGHTENED SPECULATION  ☯',
+    '₿  DIAMOND HANDS, EMPTY MIND  ₿',
+    '∞  THE CHART IS AN ILLUSION  ∞',
+    '龍  BUY THE DIP. BREATHE.  龍',
+    '✦  NFA. NOT FINANCIAL ASCETICISM.  ✦',
+    '禅  THE VOID HOLDS YOUR BAGS  禅',
+    '◈  NGMI IS A STATE OF MIND  ◈',
+    'Ω  WAGMI OR WAGNI — ALL IMPERMANENT  Ω',
+  ];
+
+  let idx = 0;
+
+  function rotate() {
+    el.classList.add('fade-out');
+    setTimeout(() => {
+      idx = (idx + 1) % lines.length;
+      el.textContent = lines[idx];
+      el.classList.remove('fade-out');
+    }, 500);
+  }
+
+  el.textContent = lines[0];
+  setInterval(rotate, 3500);
+})();
+
+
+// ── 4. DAILY SCROLL LOADER ──────────────────────────────────────────────────
+
+const FALLBACK = {
+  date:    null,
+  title:   'The Scroll Awaits...',
+  content: 'The monk is preparing today\'s wisdom.\n\nReturn when the candles are lit and the charts have spoken.',
+  mantra:  'Patience is the only alpha.',
+};
+
+function formatDate(dateStr) {
+  if (!dateStr) return '—';
+  try {
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  } catch {
+    return dateStr;
+  }
+}
+
+function typewriterEffect(elementId, text, speedMs = 28) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
+  el.textContent = '';
+
+  // Add cursor span
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  el.appendChild(cursor);
+
+  const chars = [...text]; // Unicode-safe split
+  let i = 0;
+
+  const interval = setInterval(() => {
+    if (i >= chars.length) {
+      clearInterval(interval);
+      cursor.remove();
+      return;
+    }
+    cursor.before(document.createTextNode(chars[i]));
+    i++;
+  }, speedMs);
+}
+
+async function loadDailyScroll() {
+  const titleEl   = document.getElementById('scroll-title');
+  const dateBadge = document.getElementById('date-badge');
+  const mantraEl  = document.getElementById('mantra');
+  const contentEl = document.getElementById('scroll-content');
+
+  if (contentEl) {
+    contentEl.innerHTML = '<span class="scroll-loading"><span class="loading-dots">Loading scroll</span></span>';
+  }
+
+  let data = FALLBACK;
+
+  try {
+    const res = await fetch('./daily.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    // Basic validation
+    if (json && json.content) data = json;
+  } catch (err) {
+    console.warn('[degen-monk] Could not load daily.json, using fallback.', err);
+  }
+
+  // Populate date badge
+  if (dateBadge) {
+    dateBadge.textContent = formatDate(data.date);
+  }
+
+  // Populate title
+  if (titleEl) {
+    titleEl.textContent = data.title || FALLBACK.title;
+  }
+
+  // Populate mantra
+  if (mantraEl) {
+    mantraEl.textContent = data.mantra || FALLBACK.mantra;
+  }
+
+  // Typewriter for content
+  if (contentEl) {
+    contentEl.textContent = '';
+    typewriterEffect('scroll-content', data.content || FALLBACK.content);
+  }
+}
+
+// Kick off on DOM ready
+document.addEventListener('DOMContentLoaded', loadDailyScroll);
