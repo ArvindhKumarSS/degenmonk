@@ -395,3 +395,87 @@ function loadScrollForHash(hash) {
     });
   });
 })();
+
+/* ===========================
+   CAST CAROUSEL
+   =========================== */
+(function () {
+  const SLIDE_DURATION = 7000; // 7 seconds per slide
+
+  const slides   = Array.from(document.querySelectorAll('.carousel-slide'));
+  const dots     = Array.from(document.querySelectorAll('.carousel-dot'));
+  const prevBtn  = document.getElementById('carousel-prev');
+  const nextBtn  = document.getElementById('carousel-next');
+  const progress = document.getElementById('carousel-progress');
+
+  if (!slides.length) return;
+
+  let current   = 0;
+  let timer     = null;
+  let progTimer = null;
+
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('carousel-dot--active');
+    dots[current].setAttribute('aria-selected', 'false');
+
+    current = (idx + slides.length) % slides.length;
+
+    slides[current].classList.add('active');
+    dots[current].classList.add('carousel-dot--active');
+    dots[current].setAttribute('aria-selected', 'true');
+
+    resetProgress();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function startAuto() {
+    clearInterval(timer);
+    timer = setInterval(next, SLIDE_DURATION);
+  }
+
+  function resetProgress() {
+    clearTimeout(progTimer);
+    if (!progress) return;
+    progress.style.transition = 'none';
+    progress.style.width = '0%';
+    // Force reflow
+    void progress.offsetWidth;
+    progress.style.transition = `width ${SLIDE_DURATION}ms linear`;
+    progress.style.width = '100%';
+  }
+
+  // Init
+  resetProgress();
+  startAuto();
+
+  prevBtn && prevBtn.addEventListener('click', () => { prev(); startAuto(); });
+  nextBtn && nextBtn.addEventListener('click', () => { next(); startAuto(); });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => { goTo(i); startAuto(); });
+  });
+
+  // Pause on hover
+  const wrapper = document.querySelector('.carousel-wrapper');
+  if (wrapper) {
+    wrapper.addEventListener('mouseenter', () => {
+      clearInterval(timer);
+      if (progress) {
+        progress.style.transition = 'none';
+      }
+    });
+    wrapper.addEventListener('mouseleave', () => {
+      resetProgress();
+      startAuto();
+    });
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  { prev(); startAuto(); }
+    if (e.key === 'ArrowRight') { next(); startAuto(); }
+  });
+})();

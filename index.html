@@ -178,6 +178,137 @@
     </section>
 
     <!-- ══════════════════════════════
+         CAST CAROUSEL
+    ══════════════════════════════ -->
+    <section id="cast-carousel" aria-labelledby="cast-heading">
+      <p class="section-label" id="cast-heading">The Cast</p>
+
+      <div class="carousel-wrapper">
+        <!-- Progress bar -->
+        <div class="carousel-progress" id="carousel-progress"></div>
+
+        <!-- Slides -->
+        <div class="carousel-track" id="carousel-track">
+
+          <!-- 1. The Monk -->
+          <div class="carousel-slide active" role="group" aria-label="Character 1 of 7">
+            <div class="char-image-wrap">
+              <img class="char-image" src="chars/monk.png" alt="The Monk" loading="lazy" />
+            </div>
+            <div class="char-info">
+              <span class="char-number">01 / 07</span>
+              <h3 class="char-name">The Monk</h3>
+              <p class="char-role">Protagonist · The Enlightened One</p>
+              <p class="char-desc">Bald. Robed in saffron. Always cross-legged, laptop balanced on knees, eyes half-closed. He has been wrecked, rugged, and liquidated — and emerged serene. Markets do not disturb him. He disturbs the markets.</p>
+              <blockquote class="char-quote">"Short the noise. Long the silence. Never reveal your entries."</blockquote>
+            </div>
+          </div>
+
+          <!-- 2. Degen -->
+          <div class="carousel-slide" role="group" aria-label="Character 2 of 7">
+            <div class="char-image-wrap">
+              <img class="char-image" src="chars/degen.png" alt="Degen" loading="lazy" />
+            </div>
+            <div class="char-info">
+              <span class="char-number">02 / 07</span>
+              <h3 class="char-name">Degen</h3>
+              <p class="char-role">The Foil · Retail Psyche Incarnate</p>
+              <p class="char-desc">Hoodie plastered with shitcoin logos. Wide manic eyes, permanent sweat, phone showing green charts going vertical. He buys tops, sells bottoms, and asks "wen moon?" in every group chat. He is all of us at 3 AM.</p>
+              <blockquote class="char-quote">"It's different this time. I can feel it."</blockquote>
+            </div>
+          </div>
+
+          <!-- 3. The Whale -->
+          <div class="carousel-slide" role="group" aria-label="Character 3 of 7">
+            <div class="char-image-wrap">
+              <img class="char-image" src="chars/whale.png" alt="The Whale" loading="lazy" />
+            </div>
+            <div class="char-info">
+              <span class="char-number">03 / 07</span>
+              <h3 class="char-name">The Whale</h3>
+              <p class="char-role">Silent Power · The Market Mover</p>
+              <p class="char-desc">A silhouette in a pinstripe suit behind a wall of Bloomberg terminals. Face always in shadow. Only hands visible. Never speaks. Accumulates while others panic. One keystroke moves billions. The Monk watches with respect.</p>
+              <blockquote class="char-quote">*(silence)*</blockquote>
+            </div>
+          </div>
+
+          <!-- 4. The Fed Chair -->
+          <div class="carousel-slide" role="group" aria-label="Character 4 of 7">
+            <div class="char-image-wrap">
+              <img class="char-image" src="chars/fedchair.png" alt="The Fed Chair" loading="lazy" />
+            </div>
+            <div class="char-info">
+              <span class="char-number">04 / 07</span>
+              <h3 class="char-name">The Fed Chair</h3>
+              <p class="char-role">Bumbling Authority · The Printer</p>
+              <p class="char-desc">Bald, suited, permanently bewildered. Carries an oversized money printer labelled BRRR. Every word he speaks accidentally nukes or pumps markets. Genuinely believes he controls inflation. The market begs to differ.</p>
+              <blockquote class="char-quote">"Data dependent. Transitory. We have the tools."</blockquote>
+            </div>
+          </div>
+
+          <!-- 5. The Altcoin Pilgrim -->
+          <div class="carousel-slide" role="group" aria-label="Character 5 of 7">
+            <div class="char-image-wrap">
+              <img class="char-image" src="chars/altcoin.png" alt="The Altcoin Pilgrim" loading="lazy" />
+            </div>
+            <div class="char-info">
+              <span class="char-number">05 / 07</span>
+              <h3 class="char-name">Altcoin Pilgrim</h3>
+              <p class="char-role">The Eternal Optimist · The Shill</p>
+              <p class="char-desc">Colorful patchwork vest covered in coin logos. Big permanent grin. Always clutching a whitepaper like a religious scroll. Has attended 40 crypto conferences and pitched 200 projects. Turns bullish at exact tops. Never flinches.</p>
+              <blockquote class="char-quote">"This one's different. Read the tokenomics."</blockquote>
+            </div>
+          </div>
+
+          <!-- 6. Fibonacci -->
+          <div class="carousel-slide" role="group" aria-label="Character 6 of 7">
+            <div class="char-image-wrap">
+              <img class="char-image" src="chars/fibonacci.png" alt="Fibonacci" loading="lazy" />
+            </div>
+            <div class="char-info">
+              <span class="char-number">06 / 07</span>
+              <h3 class="char-name">Fibonacci</h3>
+              <p class="char-role">The TA Wizard · The Chart Whisperer</p>
+              <p class="char-desc">Wizard hat, six monitors, chalk-covered hands. Draws retracement levels on everything — coffee mugs, walls, his own palm. Sees the golden ratio in random noise. Right for the wrong reasons. Always calls the bottom after the bounce.</p>
+              <blockquote class="char-quote">"The 0.618 retracement was obvious."</blockquote>
+            </div>
+          </div>
+
+          <!-- 7. The Normie -->
+          <div class="carousel-slide" role="group" aria-label="Character 7 of 7">
+            <div class="char-image-wrap">
+              <img class="char-image" src="chars/normie.png" alt="The Normie" loading="lazy" />
+            </div>
+            <div class="char-info">
+              <span class="char-number">07 / 07</span>
+              <h3 class="char-name">The Normie</h3>
+              <p class="char-role">Retail FOMO · The Late Arrival</p>
+              <p class="char-desc">Plain clothes, innocent eyes, newspaper reading BTC HITS ALL-TIME HIGH. Heard about crypto from their barber last week. Buys the top with full conviction, sells the bottom in total despair. Swears off crypto forever — until next cycle.</p>
+              <blockquote class="char-quote">"My uncle says this is the next internet."</blockquote>
+            </div>
+          </div>
+
+        </div><!-- /carousel-track -->
+
+        <!-- Nav Arrows -->
+        <button class="carousel-btn carousel-btn--prev" id="carousel-prev" aria-label="Previous character">&#8249;</button>
+        <button class="carousel-btn carousel-btn--next" id="carousel-next" aria-label="Next character">&#8250;</button>
+
+        <!-- Dots -->
+        <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Character navigation">
+          <button class="carousel-dot carousel-dot--active" role="tab" aria-selected="true"  aria-label="The Monk"></button>
+          <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Degen"></button>
+          <button class="carousel-dot" role="tab" aria-selected="false" aria-label="The Whale"></button>
+          <button class="carousel-dot" role="tab" aria-selected="false" aria-label="The Fed Chair"></button>
+          <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Altcoin Pilgrim"></button>
+          <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Fibonacci"></button>
+          <button class="carousel-dot" role="tab" aria-selected="false" aria-label="The Normie"></button>
+        </div>
+
+      </div><!-- /carousel-wrapper -->
+    </section>
+
+    <!-- ══════════════════════════════
          MAIN — DAILY SCROLL
     ══════════════════════════════ -->
     <main>
