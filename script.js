@@ -229,7 +229,105 @@ function loadScrollForHash(hash) {
 }
 
 
-// ── 5. ARCHIVE LOADER ───────────────────────────────────────────────────────
+// ── 5. CAST CAROUSEL ────────────────────────────────────────────────────────
+
+(function initCarousel() {
+  const track    = document.getElementById('carousel-track');
+  const prevBtn  = document.getElementById('carousel-prev');
+  const nextBtn  = document.getElementById('carousel-next');
+  const dotsEl   = document.getElementById('carousel-dots');
+  if (!track || !prevBtn || !nextBtn || !dotsEl) return;
+
+  const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+  const dots   = Array.from(dotsEl.querySelectorAll('.carousel-dot'));
+  const TOTAL  = slides.length;
+  const DELAY  = 7000; // ms per slide
+
+  let current   = 0;
+  let timer     = null;
+  let progress  = null;
+
+  // Inject progress bar
+  const bar = document.createElement('div');
+  bar.className = 'carousel-progress';
+  track.closest('.carousel-wrapper').appendChild(bar);
+  progress = bar;
+
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('carousel-dot--active');
+    dots[current].setAttribute('aria-selected', 'false');
+
+    current = (idx + TOTAL) % TOTAL;
+
+    slides[current].classList.add('active');
+    dots[current].classList.add('carousel-dot--active');
+    dots[current].setAttribute('aria-selected', 'true');
+
+    resetProgress();
+  }
+
+  function resetProgress() {
+    progress.style.transition = 'none';
+    progress.style.width = '0%';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        progress.style.transition = `width ${DELAY}ms linear`;
+        progress.style.width = '100%';
+      });
+    });
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), DELAY);
+    resetProgress();
+  }
+
+  function stopTimer() {
+    clearInterval(timer);
+    progress.style.transition = 'none';
+  }
+
+  // Init first slide
+  slides[0].classList.add('active');
+  startTimer();
+
+  // Arrow buttons
+  prevBtn.addEventListener('click', () => { goTo(current - 1); startTimer(); });
+  nextBtn.addEventListener('click', () => { goTo(current + 1); startTimer(); });
+
+  // Dot buttons
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => { goTo(i); startTimer(); });
+  });
+
+  // Pause on hover
+  const wrapper = track.closest('.carousel-wrapper');
+  wrapper.addEventListener('mouseenter', stopTimer);
+  wrapper.addEventListener('mouseleave', startTimer);
+
+  // Keyboard support
+  wrapper.setAttribute('tabindex', '0');
+  wrapper.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { goTo(current - 1); startTimer(); }
+    if (e.key === 'ArrowRight') { goTo(current + 1); startTimer(); }
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  wrapper.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  wrapper.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) {
+      dx < 0 ? goTo(current + 1) : goTo(current - 1);
+      startTimer();
+    }
+  });
+})();
+
+
+// ── 6. ARCHIVE LOADER ───────────────────────────────────────────────────────
 
 (function initArchive() {
   const listEl = document.getElementById('archive-list');
