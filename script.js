@@ -182,7 +182,7 @@ function typewriterEffect(elementId, text, speedMs = 28) {
   }, speedMs);
 }
 
-async function loadDailyScroll() {
+async function loadScroll(url) {
   const titleEl   = document.getElementById('scroll-title');
   const dateBadge = document.getElementById('date-badge');
   const mantraEl  = document.getElementById('mantra');
@@ -195,36 +195,105 @@ async function loadDailyScroll() {
   let data = FALLBACK;
 
   try {
-    const res = await fetch('./daily.json?t=' + Date.now());
+    const res = await fetch(url + '?t=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const json = await res.json();
-    // Basic validation
     if (json && json.content) data = json;
   } catch (err) {
-    console.warn('[degen-monk] Could not load daily.json, using fallback.', err);
+    console.warn('[degen-monk] Could not load scroll:', url, err);
   }
 
-  // Populate date badge
-  if (dateBadge) {
-    dateBadge.textContent = formatDate(data.date);
-  }
+  if (dateBadge) dateBadge.textContent = formatDate(data.date);
+  if (titleEl)   titleEl.textContent   = data.title  || FALLBACK.title;
+  if (mantraEl)  mantraEl.textContent  = data.mantra || FALLBACK.mantra;
 
-  // Populate title
-  if (titleEl) {
-    titleEl.textContent = data.title || FALLBACK.title;
-  }
-
-  // Populate mantra
-  if (mantraEl) {
-    mantraEl.textContent = data.mantra || FALLBACK.mantra;
-  }
-
-  // Typewriter for content
   if (contentEl) {
     contentEl.textContent = '';
     typewriterEffect('scroll-content', data.content || FALLBACK.content);
   }
 }
 
-// Kick off on DOM ready
-document.addEventListener('DOMContentLoaded', loadDailyScroll);
+function loadScrollForHash(hash) {
+  const todayLink    = document.getElementById('today-link');
+  const sectionLabel = document.querySelector('#daily-scroll .section-label');
+
+  if (hash && hash.length > 1) {
+    loadScroll('./' + hash.slice(1) + '.json');
+    if (todayLink)    todayLink.removeAttribute('hidden');
+    if (sectionLabel) sectionLabel.textContent = 'Past Transmission';
+  } else {
+    loadScroll('./daily.json');
+    if (todayLink)    todayLink.setAttribute('hidden', '');
+    if (sectionLabel) sectionLabel.textContent = 'Daily Transmission';
+  }
+}
+
+
+// ── 5. ARCHIVE LOADER ───────────────────────────────────────────────────────
+
+(function initArchive() {
+  const listEl = document.getElementById('archive-list');
+
+  async function renderArchive() {
+    if (!listEl) return;
+    let entries = [];
+    try {
+      const res = await fetch('./archive.json?t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      entries = await res.json();
+    } catch (err) {
+      console.warn('[degen-monk] Could not load archive.json', err);
+      listEl.innerHTML = '<p class="archive-empty">No past transmissions found.</p>';
+      return;
+    }
+    if (!Array.isArray(entries) || entries.length === 0) {
+      listEl.innerHTML = '<p class="archive-empty">No past transmissions yet.</p>';
+      return;
+    }
+    listEl.innerHTML = '';
+    entries.forEach(entry => {
+      const btn = document.createElement('button');
+      btn.className = 'archive-entry';
+      btn.setAttribute('data-date', entry.date);
+      btn.setAttribute('aria-label', 'Load transmission: ' + entry.title);
+      btn.innerHTML =
+        '<span class="archive-entry-date">' + entry.date + '</span>' +
+        '<span class="archive-entry-title">' + entry.title + '</span>';
+      btn.addEventListener('click', () => { window.location.hash = entry.date; });
+      listEl.appendChild(btn);
+    });
+    highlightActiveEntry(window.location.hash);
+  }
+
+  function highlightActiveEntry(hash) {
+    if (!listEl) return;
+    const cur = hash && hash.length > 1 ? hash.slice(1) : null;
+    listEl.querySelectorAll('.archive-entry').forEach(btn => {
+      const active = btn.getAttribute('data-date') === cur;
+      btn.classList.toggle('archive-entry--active', active);
+      active ? btn.setAttribute('aria-current', 'true') : btn.removeAttribute('aria-current');
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderArchive();
+    loadScrollForHash(window.location.hash);
+
+    const todayLink = document.getElementById('today-link');
+    if (todayLink) {
+      todayLink.addEventListener('click', e => {
+        e.preventDefault();
+        window.location.hash = '';
+        loadScrollForHash('');
+        highlightActiveEntry('');
+      });
+    }
+
+    window.addEventListener('hashchange', () => {
+      loadScrollForHash(window.location.hash);
+      highlightActiveEntry(window.location.hash);
+      document.getElementById('daily-scroll')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();

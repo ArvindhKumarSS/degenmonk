@@ -531,6 +531,107 @@ footer {
   .incense-container {
     display: none;
   }
+
+  .archive-entry {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
+
+  .today-link {
+    font-size: 0.65rem;
+  }
+}
+
+/* === ARCHIVE SECTION === */
+#archive-section {
+  position: relative;
+  margin: 60px auto 0;
+  max-width: 780px;
+  padding-bottom: 80px;
+}
+
+#archive-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 0;
+}
+
+.archive-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 10px 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  color: inherit;
+  font-family: inherit;
+}
+
+.archive-entry:hover {
+  background: rgba(157, 78, 221, 0.08);
+  border-color: var(--purple-dim);
+}
+
+.archive-entry--active {
+  background: rgba(255, 215, 0, 0.06);
+  border-color: var(--gold-dim);
+}
+
+.archive-entry--active .archive-entry-date { color: var(--gold); }
+.archive-entry--active .archive-entry-title { color: var(--text-bright); }
+
+.archive-entry-date {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.archive-entry-title {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.4;
+  transition: color 0.15s ease;
+}
+
+.archive-entry:hover .archive-entry-title { color: var(--text-bright); }
+
+.archive-empty {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  padding: 16px 0;
+  letter-spacing: 0.1em;
+}
+
+.today-link {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.12em;
+  border: 1px solid var(--text-dim);
+  padding: 3px 10px;
+  border-radius: 2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.today-link:hover {
+  color: var(--gold);
+  border-color: var(--gold-dim);
 }
 
 /* === UTILITY === */
