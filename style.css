@@ -998,3 +998,57 @@ footer {
   .char-info { padding: 28px 24px 32px; gap: 12px; }
   .carousel-btn { width: 36px; height: 36px; font-size: 1.4rem; }
 }
+
+/* ===========================
+   COMIC STRIP SECTION
+   =========================== */
+
+#strip-section {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto 60px;
+}
+
+#strip-section[hidden] { display: none; }
+
+.strip-card {
+  background: var(--bg-card);
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 1px var(--purple-dim),
+    0 0 30px rgba(157, 78, 221, 0.15);
+  overflow: hidden;
+}
+
+.strip-image-wrap {
+  width: 100%;
+  line-height: 0;
+}
+
+.strip-image-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;
+}
+
+.strip-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold-dim);
+  text-align: center;
+  padding: 14px 20px;
+  background: rgba(0,0,0,0.3);
+  border-top: 1px solid rgba(255,215,0,0.1);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  #strip-section { margin-bottom: 40px; }
+  .strip-title { font-size: 0.72rem; padding: 12px 16px; }
+}
