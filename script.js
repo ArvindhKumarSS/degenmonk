@@ -396,3 +396,94 @@ function loadScrollForHash(hash) {
   });
 })();
 
+
+/* ===========================
+   COMIC STRIP LOADER
+   =========================== */
+(function () {
+  let stripsData = null;
+
+  async function loadStripsData() {
+    if (stripsData) return stripsData;
+    try {
+      const res = await fetch('strips.json?v=' + Date.now());
+      stripsData = await res.json();
+    } catch (e) {
+      stripsData = {};
+    }
+    return stripsData;
+  }
+
+  async function updateStrip(date) {
+    const data   = await loadStripsData();
+    const section = document.getElementById('strip-section');
+    const img     = document.getElementById('strip-image');
+    const title   = document.getElementById('strip-title');
+    if (!section || !img || !title) return;
+
+    const entry = data[date];
+    if (entry) {
+      img.src        = entry.file + '?v=' + Date.now();
+      img.alt        = 'DegenMonk — ' + entry.title;
+      title.textContent = entry.title;
+      section.removeAttribute('hidden');
+    } else {
+      section.setAttribute('hidden', '');
+    }
+  }
+
+  // Hook into date selection — patch the global loadPost if it exists
+  function patchLoadPost() {
+    const orig = window._loadPost || window.loadPost;
+    if (!orig) return false;
+    const key = window._loadPost ? '_loadPost' : 'loadPost';
+    window[key] = function (date, ...args) {
+      orig.call(this, date, ...args);
+      updateStrip(date);
+    };
+    return true;
+  }
+
+  // Also listen for hash changes (archive navigation uses hashes)
+  function dateFromHash() {
+    const h = location.hash.replace('#', '');
+    return /^\d{4}-\d{2}-\d{2}$/.test(h) ? h : null;
+  }
+
+  window.addEventListener('hashchange', () => {
+    const d = dateFromHash();
+    if (d) updateStrip(d);
+  });
+
+  // On page load
+  document.addEventListener('DOMContentLoaded', () => {
+    // Try to patch after scripts settle
+    setTimeout(() => {
+      if (!patchLoadPost()) {
+        // Fallback: observe the date badge for changes
+        const badge = document.getElementById('date-badge');
+        if (badge) {
+          new MutationObserver(() => {
+            const d = badge.textContent.trim();
+            if (/^\d{4}-\d{2}-\d{2}$/.test(d)) updateStrip(d);
+          }).observe(badge, { childList: true, characterData: true, subtree: true });
+        }
+      }
+      // Load for current date or hash
+      const d = dateFromHash();
+      if (d) updateStrip(d);
+      else {
+        // load for today's date shown in the badge after it populates
+        const badge = document.getElementById('date-badge');
+        const check = setInterval(() => {
+          const val = badge && badge.textContent.trim();
+          if (val && /^\d{4}-\d{2}-\d{2}$/.test(val)) {
+            clearInterval(check);
+            updateStrip(val);
+          }
+        }, 200);
+        setTimeout(() => clearInterval(check), 5000);
+      }
+    }, 500);
+  });
+})();

@@ -3,15 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Degen Monk — Enlightened speculation. Diamond hands, empty mind." />
+
+  <!-- ░░ SEO ░░ -->
+  <title>Degen Monk ☯ — Enlightened Crypto Speculation</title>
+  <meta name="description" content="DegenMonk is a daily crypto comic and philosophical dispatch — where Buddhist detachment meets diamond hands. Charts, koans, and the occasional short." />
+  <meta name="keywords" content="crypto comic, bitcoin comic, degen monk, crypto philosophy, trading humor, degenmonk, dilbert crypto" />
+  <meta name="author" content="DegenMonk" />
+  <link rel="canonical" href="https://degenmonk.com/" />
+
+  <!-- ░░ Open Graph ░░ -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://degenmonk.com/" />
+  <meta property="og:title"       content="Degen Monk ☯ — Enlightened Crypto Speculation" />
+  <meta property="og:description" content="Daily crypto wisdom from the only trader who never reveals his entries. Diamond hands, empty mind." />
+  <meta property="og:image"       content="https://degenmonk.com/chars/monk.png" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height"content="1024" />
+  <meta property="og:site_name"   content="DegenMonk" />
+
+  <!-- ░░ Twitter Card ░░ -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@degenmonk" />
+  <meta name="twitter:title"       content="Degen Monk ☯ — Enlightened Crypto Speculation" />
+  <meta name="twitter:description" content="Daily crypto wisdom from the only trader who never reveals his entries. Diamond hands, empty mind." />
+  <meta name="twitter:image"       content="https://degenmonk.com/chars/monk.png" />
+
+  <!-- ░░ Theme ░░ -->
   <meta name="theme-color" content="#0a0a0f" />
 
-  <!-- Open Graph -->
-  <meta property="og:title"       content="Degen Monk" />
-  <meta property="og:description" content="Enlightened speculation. Diamond hands, empty mind." />
-  <meta property="og:type"        content="website" />
+  <!-- ░░ JSON-LD Structured Data ░░ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "DegenMonk",
+    "url": "https://degenmonk.com",
+    "description": "Daily crypto comic and philosophical dispatch where Buddhist detachment meets diamond hands.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "DegenMonk",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://degenmonk.com/chars/monk.png"
+      }
+    },
+    "potentialAction": {
+      "@type": "ReadAction",
+      "target": "https://degenmonk.com/"
+    }
+  }
+  </script>
 
-  <title>Degen Monk ☯</title>
+  <!-- ░░ Google Analytics (GA4) ░░ -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7RBY6CF6ZV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7RBY6CF6ZV', {
+      page_title: 'DegenMonk',
+      page_location: window.location.href,
+    });
+  </script>
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -30,23 +84,19 @@
     ══════════════════════════════ -->
     <header role="banner">
 
-      <!-- Title -->
       <h1 class="hero-title">Degen Monk</h1>
 
       <div class="hero-divider" aria-hidden="true"></div>
 
-      <!-- Rotating subtitle -->
       <p class="hero-subtitle" id="hero-subtitle" aria-live="polite">
         ☯  ENLIGHTENED SPECULATION  ☯
       </p>
 
-      <!-- Tagline -->
       <p class="hero-tagline">
         Where the candlestick meets the candle flame.<br />
         Where rekt meets enlightened.
       </p>
 
-      <!-- Scroll down indicator -->
       <div class="scroll-indicator" aria-hidden="true">SCROLL</div>
 
     </header>
@@ -58,7 +108,6 @@
       <p class="section-label" id="cast-heading">The Cast</p>
 
       <div class="carousel-wrapper">
-        <!-- Progress bar -->
         <div class="carousel-progress" id="carousel-progress"></div>
 
         <div class="carousel-track" id="carousel-track">
@@ -163,11 +212,9 @@
 
         </div><!-- /carousel-track -->
 
-        <!-- Nav Arrows -->
         <button class="carousel-btn carousel-btn--prev" id="carousel-prev" aria-label="Previous character">&#8249;</button>
         <button class="carousel-btn carousel-btn--next" id="carousel-next" aria-label="Next character">&#8250;</button>
 
-        <!-- Dots -->
         <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Character navigation">
           <button class="carousel-dot carousel-dot--active" role="tab" aria-selected="true"  aria-label="The Monk"></button>
           <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Degen"></button>
@@ -182,6 +229,20 @@
     </section>
 
     <!-- ══════════════════════════════
+         COMIC STRIP SECTION
+    ══════════════════════════════ -->
+    <section id="strip-section" aria-labelledby="strip-heading" hidden>
+      <p class="section-label" id="strip-heading">Today's Strip</p>
+
+      <div class="strip-card">
+        <div class="strip-image-wrap">
+          <img id="strip-image" src="" alt="DegenMonk Comic Strip" />
+        </div>
+        <p class="strip-title" id="strip-title"></p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
          MAIN — DAILY SCROLL
     ══════════════════════════════ -->
     <main>
@@ -191,19 +252,16 @@
 
         <article class="scroll-card">
 
-          <!-- Card Header -->
           <div class="scroll-card-header">
             <span class="date-badge" id="date-badge">—</span>
             <h2 class="scroll-title" id="scroll-title">Loading...</h2>
             <a href="#" id="today-link" class="today-link" aria-label="Return to today's transmission" hidden>← Today</a>
           </div>
 
-          <!-- Card Body — typing effect target -->
           <div class="scroll-card-body">
             <p id="scroll-content" aria-live="polite"></p>
           </div>
 
-          <!-- Card Footer — mantra -->
           <footer class="scroll-card-footer">
             <blockquote id="mantra"></blockquote>
           </footer>
