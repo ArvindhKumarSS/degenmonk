@@ -422,59 +422,34 @@ function loadScrollForHash(hash) {
 
     const entry = strips[date];
     if (entry) {
-      img.src           = entry.file;
-      img.alt           = 'DegenMonk — ' + entry.title;
+      img.src             = entry.file + '?t=' + Date.now();
+      img.alt             = 'DegenMonk — ' + entry.title;
       titleEl.textContent = entry.title;
       section.removeAttribute('hidden');
+      section.style.display = '';
     } else {
       section.setAttribute('hidden', '');
+      section.style.display = 'none';
     }
   }
 
-  // Patch loadScroll to intercept the URL and extract the date
-  const _origLoadScroll = window.loadScroll;
-  window.loadScroll = async function (url, ...args) {
-    // Extract date from URL: ./2026-03-19.json → 2026-03-19, or ./daily.json
-    let date = null;
-    const match = url.match(/(\d{4}-\d{2}-\d{2})\.json/);
-    if (match) {
-      date = match[1];
-    } else if (url.includes('daily.json')) {
-      // Fetch daily.json to get its date
+  async function loadDateAndShow() {
+    const hash = window.location.hash.replace('#', '');
+    if (/^\d{4}-\d{2}-\d{2}$/.test(hash)) {
+      showStrip(hash);
+    } else {
+      // Default: fetch daily.json and use its date
       try {
-        const res = await fetch(url + '?t=' + Date.now());
+        const res  = await fetch('daily.json?t=' + Date.now());
         const json = await res.json();
-        date = json.date || null;
+        showStrip(json.date);
       } catch (e) {}
     }
-    if (_origLoadScroll) await _origLoadScroll.call(this, url, ...args);
-    showStrip(date);
-  };
+  }
 
-  // Handle hash on initial load
-  document.addEventListener('DOMContentLoaded', () => {
-    const hash = window.location.hash.replace('#', '');
-    if (/^\d{4}-\d{2}-\d{2}$/.test(hash)) {
-      showStrip(hash);
-    } else {
-      // Load daily.json to get today's date
-      fetch('daily.json?t=' + Date.now())
-        .then(r => r.json())
-        .then(j => showStrip(j.date))
-        .catch(() => {});
-    }
-  });
+  // On page load
+  document.addEventListener('DOMContentLoaded', loadDateAndShow);
 
-  // Handle archive navigation (hash changes)
-  window.addEventListener('hashchange', () => {
-    const hash = window.location.hash.replace('#', '');
-    if (/^\d{4}-\d{2}-\d{2}$/.test(hash)) {
-      showStrip(hash);
-    } else {
-      fetch('daily.json?t=' + Date.now())
-        .then(r => r.json())
-        .then(j => showStrip(j.date))
-        .catch(() => {});
-    }
-  });
+  // On archive navigation (hash changes)
+  window.addEventListener('hashchange', loadDateAndShow);
 })();
