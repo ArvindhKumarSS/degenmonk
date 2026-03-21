@@ -403,87 +403,78 @@ function loadScrollForHash(hash) {
 (function () {
   let stripsData = null;
 
-  async function loadStripsData() {
+  async function getStrips() {
     if (stripsData) return stripsData;
     try {
-      const res = await fetch('strips.json?v=' + Date.now());
+      const res = await fetch('strips.json?t=' + Date.now());
       stripsData = await res.json();
-    } catch (e) {
-      stripsData = {};
-    }
+    } catch (e) { stripsData = {}; }
     return stripsData;
   }
 
-  async function updateStrip(date) {
-    const data   = await loadStripsData();
+  async function showStrip(date) {
+    if (!date) return;
+    const strips  = await getStrips();
     const section = document.getElementById('strip-section');
     const img     = document.getElementById('strip-image');
-    const title   = document.getElementById('strip-title');
-    if (!section || !img || !title) return;
+    const titleEl = document.getElementById('strip-title');
+    if (!section) return;
 
-    const entry = data[date];
+    const entry = strips[date];
     if (entry) {
-      img.src        = entry.file + '?v=' + Date.now();
-      img.alt        = 'DegenMonk — ' + entry.title;
-      title.textContent = entry.title;
+      img.src           = entry.file;
+      img.alt           = 'DegenMonk — ' + entry.title;
+      titleEl.textContent = entry.title;
       section.removeAttribute('hidden');
     } else {
       section.setAttribute('hidden', '');
     }
   }
 
-  // Hook into date selection — patch the global loadPost if it exists
-  function patchLoadPost() {
-    const orig = window._loadPost || window.loadPost;
-    if (!orig) return false;
-    const key = window._loadPost ? '_loadPost' : 'loadPost';
-    window[key] = function (date, ...args) {
-      orig.call(this, date, ...args);
-      updateStrip(date);
-    };
-    return true;
-  }
+  // Patch loadScroll to intercept the URL and extract the date
+  const _origLoadScroll = window.loadScroll;
+  window.loadScroll = async function (url, ...args) {
+    // Extract date from URL: ./2026-03-19.json → 2026-03-19, or ./daily.json
+    let date = null;
+    const match = url.match(/(\d{4}-\d{2}-\d{2})\.json/);
+    if (match) {
+      date = match[1];
+    } else if (url.includes('daily.json')) {
+      // Fetch daily.json to get its date
+      try {
+        const res = await fetch(url + '?t=' + Date.now());
+        const json = await res.json();
+        date = json.date || null;
+      } catch (e) {}
+    }
+    if (_origLoadScroll) await _origLoadScroll.call(this, url, ...args);
+    showStrip(date);
+  };
 
-  // Also listen for hash changes (archive navigation uses hashes)
-  function dateFromHash() {
-    const h = location.hash.replace('#', '');
-    return /^\d{4}-\d{2}-\d{2}$/.test(h) ? h : null;
-  }
-
-  window.addEventListener('hashchange', () => {
-    const d = dateFromHash();
-    if (d) updateStrip(d);
+  // Handle hash on initial load
+  document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (/^\d{4}-\d{2}-\d{2}$/.test(hash)) {
+      showStrip(hash);
+    } else {
+      // Load daily.json to get today's date
+      fetch('daily.json?t=' + Date.now())
+        .then(r => r.json())
+        .then(j => showStrip(j.date))
+        .catch(() => {});
+    }
   });
 
-  // On page load
-  document.addEventListener('DOMContentLoaded', () => {
-    // Try to patch after scripts settle
-    setTimeout(() => {
-      if (!patchLoadPost()) {
-        // Fallback: observe the date badge for changes
-        const badge = document.getElementById('date-badge');
-        if (badge) {
-          new MutationObserver(() => {
-            const d = badge.textContent.trim();
-            if (/^\d{4}-\d{2}-\d{2}$/.test(d)) updateStrip(d);
-          }).observe(badge, { childList: true, characterData: true, subtree: true });
-        }
-      }
-      // Load for current date or hash
-      const d = dateFromHash();
-      if (d) updateStrip(d);
-      else {
-        // load for today's date shown in the badge after it populates
-        const badge = document.getElementById('date-badge');
-        const check = setInterval(() => {
-          const val = badge && badge.textContent.trim();
-          if (val && /^\d{4}-\d{2}-\d{2}$/.test(val)) {
-            clearInterval(check);
-            updateStrip(val);
-          }
-        }, 200);
-        setTimeout(() => clearInterval(check), 5000);
-      }
-    }, 500);
+  // Handle archive navigation (hash changes)
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (/^\d{4}-\d{2}-\d{2}$/.test(hash)) {
+      showStrip(hash);
+    } else {
+      fetch('daily.json?t=' + Date.now())
+        .then(r => r.json())
+        .then(j => showStrip(j.date))
+        .catch(() => {});
+    }
   });
 })();
