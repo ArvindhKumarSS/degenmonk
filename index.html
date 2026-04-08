@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ░░ SEO ░░ -->
-  <title>Degen Monk ☯ — Enlightened Crypto Speculation</title>
-  <meta name="description" content="DegenMonk is a daily crypto comic and philosophical dispatch — where Buddhist detachment meets diamond hands. Charts, koans, and the occasional short." />
-  <meta name="keywords" content="crypto comic, bitcoin comic, degen monk, crypto philosophy, trading humor, degenmonk, dilbert crypto" />
+  <title>Degen Monk ☯ — Daily Crypto Comic, Market Satire &amp; Enlightened Speculation</title>
+  <meta name="description" content="Daily crypto comic strip and philosophical market dispatch. Satirical takes on Bitcoin, DeFi, altcoins, and the eternal human comedy of investing — through the eyes of an enlightened degen." />
+  <meta name="keywords" content="crypto comic, bitcoin satire, degen monk, crypto philosophy, trading humor, defi satire, altcoin memes, investment satire, crypto blog, web3 humor, market commentary, bitcoin trading, crypto investing, blockchain humor, degenmonk, crypto meme, trading psychology, bitcoin meme, nft satire" />
   <meta name="author" content="DegenMonk" />
   <link rel="canonical" href="https://degenmonk.com/" />
 
   <!-- ░░ Open Graph ░░ -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://degenmonk.com/" />
-  <meta property="og:title"       content="Degen Monk ☯ — Enlightened Crypto Speculation" />
-  <meta property="og:description" content="Daily crypto wisdom from the only trader who never reveals his entries. Diamond hands, empty mind." />
+  <meta property="og:title"       content="Degen Monk ☯ — Daily Crypto Comic &amp; Market Satire" />
+  <meta property="og:description" content="Daily crypto comic strip and philosophical dispatch. Diamond hands, empty mind. Satirical takes on Bitcoin, DeFi, altcoins, and the eternal human comedy of investing." />
   <meta property="og:image"       content="https://degenmonk.com/chars/monk.png" />
   <meta property="og:image:width" content="1024" />
   <meta property="og:image:height"content="1024" />
@@ -24,8 +24,8 @@
   <!-- ░░ Twitter Card ░░ -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:site"        content="@degenmonk" />
-  <meta name="twitter:title"       content="Degen Monk ☯ — Enlightened Crypto Speculation" />
-  <meta name="twitter:description" content="Daily crypto wisdom from the only trader who never reveals his entries. Diamond hands, empty mind." />
+  <meta name="twitter:title"       content="Degen Monk ☯ — Daily Crypto Comic &amp; Market Satire" />
+  <meta name="twitter:description" content="Daily crypto comic strip and philosophical dispatch. Diamond hands, empty mind." />
   <meta name="twitter:image"       content="https://degenmonk.com/chars/monk.png" />
 
   <!-- ░░ Theme ░░ -->
@@ -35,10 +35,11 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
+    "@type": "Blog",
     "name": "DegenMonk",
     "url": "https://degenmonk.com",
-    "description": "Daily crypto comic and philosophical dispatch where Buddhist detachment meets diamond hands.",
+    "description": "Daily crypto comic strip and philosophical dispatch where Buddhist detachment meets diamond hands.",
+    "keywords": "crypto, bitcoin, satire, investing, trading, defi, altcoin, market commentary, blockchain, web3",
     "publisher": {
       "@type": "Organization",
       "name": "DegenMonk",
@@ -46,10 +47,6 @@
         "@type": "ImageObject",
         "url": "https://degenmonk.com/chars/monk.png"
       }
-    },
-    "potentialAction": {
-      "@type": "ReadAction",
-      "target": "https://degenmonk.com/"
     }
   }
   </script>
@@ -80,26 +77,92 @@
   <div class="site-wrapper">
 
     <!-- ══════════════════════════════
-         HERO SECTION
+         VIEWPORT HERO: header + strip
+         (both visible without scroll)
     ══════════════════════════════ -->
-    <header role="banner">
+    <div class="viewport-hero">
 
-      <h1 class="hero-title">Degen Monk</h1>
+      <header role="banner">
 
-      <div class="hero-divider" aria-hidden="true"></div>
+        <a href="https://etherscan.io/address/0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838"
+           class="donate-btn donate-btn--header"
+           target="_blank" rel="noopener noreferrer"
+           title="Support the Monk · ETH: 0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838"
+           aria-label="Donate ETH to support DegenMonk">Ξ Support</a>
 
-      <p class="hero-subtitle" id="hero-subtitle" aria-live="polite">
-        ☯  ENLIGHTENED SPECULATION  ☯
-      </p>
+        <h1 class="hero-title">Degen Monk</h1>
 
-      <p class="hero-tagline">
-        Where the candlestick meets the candle flame.<br />
-        Where rekt meets enlightened.
-      </p>
+        <div class="hero-divider" aria-hidden="true"></div>
 
-      <div class="scroll-indicator" aria-hidden="true">SCROLL</div>
+        <p class="hero-subtitle" id="hero-subtitle" aria-live="polite">
+          ☯  ENLIGHTENED SPECULATION  ☯
+        </p>
 
-    </header>
+        <p class="hero-tagline">
+          Where the candlestick meets the candle flame.<br />
+          Where rekt meets enlightened.
+        </p>
+
+      </header>
+
+      <!-- ══════════════════════════════
+           COMIC STRIP SECTION
+      ══════════════════════════════ -->
+      <section id="strip-section" class="strip-empty" aria-labelledby="strip-heading">
+        <p class="section-label" id="strip-heading">Today's Strip</p>
+
+        <div class="strip-card">
+          <div class="strip-image-wrap">
+            <div class="strip-placeholder" aria-hidden="true">
+              <span>☯</span>
+              <p>Today's strip is being prepared...</p>
+            </div>
+            <img id="strip-image" src="" alt="DegenMonk Comic Strip" />
+          </div>
+          <p class="strip-title" id="strip-title"></p>
+        </div>
+      </section>
+
+    </div><!-- /viewport-hero -->
+
+    <!-- ══════════════════════════════
+         MAIN — DAILY SCROLL + ARCHIVE
+    ══════════════════════════════ -->
+    <main>
+      <section id="daily-scroll" aria-labelledby="scroll-title">
+
+        <p class="section-label" aria-hidden="true">Daily Transmission</p>
+
+        <article class="scroll-card">
+
+          <div class="scroll-card-header">
+            <span class="date-badge" id="date-badge">—</span>
+            <h2 class="scroll-title" id="scroll-title">Loading...</h2>
+            <a href="#" id="today-link" class="today-link" aria-label="Return to today's transmission" hidden>← Today</a>
+          </div>
+
+          <div class="scroll-card-body">
+            <p id="scroll-content" aria-live="polite"></p>
+          </div>
+
+          <footer class="scroll-card-footer">
+            <blockquote id="mantra"></blockquote>
+          </footer>
+
+        </article>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           ARCHIVE SECTION
+      ══════════════════════════════ -->
+      <section id="archive-section" aria-labelledby="archive-heading">
+        <p class="section-label" id="archive-heading">Transmissions Archive</p>
+        <nav id="archive-list" aria-label="Past transmissions">
+          <!-- Populated by script.js -->
+        </nav>
+      </section>
+    </main>
 
     <!-- ══════════════════════════════
          CAST CAROUSEL
@@ -229,59 +292,6 @@
     </section>
 
     <!-- ══════════════════════════════
-         COMIC STRIP SECTION
-    ══════════════════════════════ -->
-    <section id="strip-section" aria-labelledby="strip-heading" hidden>
-      <p class="section-label" id="strip-heading">Today's Strip</p>
-
-      <div class="strip-card">
-        <div class="strip-image-wrap">
-          <img id="strip-image" src="" alt="DegenMonk Comic Strip" />
-        </div>
-        <p class="strip-title" id="strip-title"></p>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════
-         MAIN — DAILY SCROLL
-    ══════════════════════════════ -->
-    <main>
-      <section id="daily-scroll" aria-labelledby="scroll-title">
-
-        <p class="section-label" aria-hidden="true">Daily Transmission</p>
-
-        <article class="scroll-card">
-
-          <div class="scroll-card-header">
-            <span class="date-badge" id="date-badge">—</span>
-            <h2 class="scroll-title" id="scroll-title">Loading...</h2>
-            <a href="#" id="today-link" class="today-link" aria-label="Return to today's transmission" hidden>← Today</a>
-          </div>
-
-          <div class="scroll-card-body">
-            <p id="scroll-content" aria-live="polite"></p>
-          </div>
-
-          <footer class="scroll-card-footer">
-            <blockquote id="mantra"></blockquote>
-          </footer>
-
-        </article>
-
-      </section>
-
-      <!-- ══════════════════════════════
-           ARCHIVE SECTION
-      ══════════════════════════════ -->
-      <section id="archive-section" aria-labelledby="archive-heading">
-        <p class="section-label" id="archive-heading">Transmissions Archive</p>
-        <nav id="archive-list" aria-label="Past transmissions">
-          <!-- Populated by script.js -->
-        </nav>
-      </section>
-    </main>
-
-    <!-- ══════════════════════════════
          SITE FOOTER
     ══════════════════════════════ -->
     <footer role="contentinfo">
@@ -290,6 +300,11 @@
         <p class="footer-mantra">
           Not financial advice. Not spiritual advice. Not advice.
         </p>
+        <a href="https://etherscan.io/address/0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838"
+           class="donate-btn donate-btn--footer"
+           target="_blank" rel="noopener noreferrer"
+           title="ETH: 0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838"
+           aria-label="Donate ETH to support DegenMonk">Ξ Support the Monk</a>
         <p class="footer-meta">DEGEN MONK &nbsp;·&nbsp; EST. BLOCK 0 &nbsp;·&nbsp; ∞</p>
       </div>
     </footer>
