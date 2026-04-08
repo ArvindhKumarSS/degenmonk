@@ -84,11 +84,7 @@
 
       <header role="banner">
 
-        <a href="https://etherscan.io/address/0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838"
-           class="donate-btn donate-btn--header"
-           target="_blank" rel="noopener noreferrer"
-           title="Support the Monk · ETH: 0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838"
-           aria-label="Donate ETH to support DegenMonk">Ξ Support</a>
+        <button type="button" class="donate-btn donate-btn--header" aria-label="Donate ETH to support DegenMonk">Ξ Support</button>
 
         <h1 class="hero-title">Degen Monk</h1>
 
@@ -300,16 +296,31 @@
         <p class="footer-mantra">
           Not financial advice. Not spiritual advice. Not advice.
         </p>
-        <a href="https://etherscan.io/address/0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838"
-           class="donate-btn donate-btn--footer"
-           target="_blank" rel="noopener noreferrer"
-           title="ETH: 0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838"
-           aria-label="Donate ETH to support DegenMonk">Ξ Support the Monk</a>
+        <button type="button" class="donate-btn donate-btn--footer" aria-label="Donate ETH to support DegenMonk">Ξ Support the Monk</button>
         <p class="footer-meta">DEGEN MONK &nbsp;·&nbsp; EST. BLOCK 0 &nbsp;·&nbsp; ∞</p>
       </div>
     </footer>
 
   </div><!-- /site-wrapper -->
+
+  <!-- ░░ DONATION MODAL ░░ -->
+  <div id="donate-modal" class="donate-modal" role="dialog" aria-modal="true" aria-labelledby="donate-modal-title" hidden>
+    <div class="donate-modal-backdrop"></div>
+    <div class="donate-modal-box">
+      <button class="donate-modal-close" aria-label="Close">✕</button>
+      <p class="donate-modal-label" id="donate-modal-title">Support the Monk</p>
+      <p class="donate-modal-sub">Send ETH to this address:</p>
+      <div class="donate-modal-address">
+        <code id="donate-address">0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838</code>
+        <button class="donate-copy-btn" id="donate-copy-btn" aria-label="Copy address">Copy</button>
+      </div>
+      <a class="donate-wallet-btn"
+         href="ethereum:0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838"
+         id="donate-wallet-btn"
+         aria-label="Open send dialog in your wallet">Open in Wallet</a>
+      <p class="donate-modal-note">Works with MetaMask, Coinbase Wallet, Rainbow &amp; any EIP-681 wallet</p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
