@@ -425,11 +425,9 @@ function loadScrollForHash(hash) {
       img.src             = entry.file + '?t=' + Date.now();
       img.alt             = 'DegenMonk — ' + entry.title;
       titleEl.textContent = entry.title;
-      section.removeAttribute('hidden');
-      section.style.display = '';
+      section.classList.remove('strip-empty');
     } else {
-      section.setAttribute('hidden', '');
-      section.style.display = 'none';
+      section.classList.add('strip-empty');
     }
   }
 
@@ -452,4 +450,36 @@ function loadScrollForHash(hash) {
 
   // On archive navigation (hash changes)
   window.addEventListener('hashchange', loadDateAndShow);
+})();
+
+
+// ── 7. DONATION COPY ────────────────────────────────────────────────────────
+
+(function initDonation() {
+  const ETH = '0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838';
+
+  function showCopied(btn) {
+    const original = btn.innerHTML;
+    btn.innerHTML = 'Ξ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = original;
+      btn.classList.remove('copied');
+    }, 2000);
+  }
+
+  document.querySelectorAll('.donate-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ETH).then(() => {
+          showCopied(btn);
+        }).catch(() => {
+          window.open('https://etherscan.io/address/' + ETH, '_blank', 'noopener');
+        });
+      } else {
+        window.open('https://etherscan.io/address/' + ETH, '_blank', 'noopener');
+      }
+    });
+  });
 })();
