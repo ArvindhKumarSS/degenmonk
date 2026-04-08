@@ -453,33 +453,45 @@ function loadScrollForHash(hash) {
 })();
 
 
-// ── 7. DONATION COPY ────────────────────────────────────────────────────────
+// ── 7. DONATION MODAL ───────────────────────────────────────────────────────
 
 (function initDonation() {
-  const ETH = '0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838';
+  const ETH      = '0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838';
+  const modal    = document.getElementById('donate-modal');
+  const copyBtn  = document.getElementById('donate-copy-btn');
+  const closeBtn = modal && modal.querySelector('.donate-modal-close');
+  const backdrop = modal && modal.querySelector('.donate-modal-backdrop');
 
-  function showCopied(btn) {
-    const original = btn.innerHTML;
-    btn.innerHTML = 'Ξ Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.innerHTML = original;
-      btn.classList.remove('copied');
-    }, 2000);
-  }
+  if (!modal) return;
+
+  function openModal()  { modal.removeAttribute('hidden'); }
+  function closeModal() { modal.setAttribute('hidden', ''); }
 
   document.querySelectorAll('.donate-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.preventDefault();
+    btn.addEventListener('click', openModal);
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (backdrop) backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(ETH).then(() => {
-          showCopied(btn);
-        }).catch(() => {
-          window.open('https://etherscan.io/address/' + ETH, '_blank', 'noopener');
+          copyBtn.textContent = 'Copied!';
+          copyBtn.classList.add('copied');
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy';
+            copyBtn.classList.remove('copied');
+          }, 2000);
         });
       } else {
-        window.open('https://etherscan.io/address/' + ETH, '_blank', 'noopener');
+        const range = document.createRange();
+        range.selectNode(document.getElementById('donate-address'));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
       }
     });
-  });
+  }
 })();
