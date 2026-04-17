@@ -425,11 +425,9 @@ function loadScrollForHash(hash) {
       img.src             = entry.file + '?t=' + Date.now();
       img.alt             = 'DegenMonk — ' + entry.title;
       titleEl.textContent = entry.title;
-      section.removeAttribute('hidden');
-      section.style.display = '';
+      section.classList.remove('strip-empty');
     } else {
-      section.setAttribute('hidden', '');
-      section.style.display = 'none';
+      section.classList.add('strip-empty');
     }
   }
 
@@ -452,4 +450,48 @@ function loadScrollForHash(hash) {
 
   // On archive navigation (hash changes)
   window.addEventListener('hashchange', loadDateAndShow);
+})();
+
+
+// ── 7. DONATION MODAL ───────────────────────────────────────────────────────
+
+(function initDonation() {
+  const ETH      = '0x93FAD9FC1B22a2ba79c8451C392Cd8e14aae9838';
+  const modal    = document.getElementById('donate-modal');
+  const copyBtn  = document.getElementById('donate-copy-btn');
+  const closeBtn = modal && modal.querySelector('.donate-modal-close');
+  const backdrop = modal && modal.querySelector('.donate-modal-backdrop');
+
+  if (!modal) return;
+
+  function openModal()  { modal.removeAttribute('hidden'); }
+  function closeModal() { modal.setAttribute('hidden', ''); }
+
+  document.querySelectorAll('.donate-btn').forEach(btn => {
+    btn.addEventListener('click', openModal);
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (backdrop) backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ETH).then(() => {
+          copyBtn.textContent = 'Copied!';
+          copyBtn.classList.add('copied');
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy';
+            copyBtn.classList.remove('copied');
+          }, 2000);
+        });
+      } else {
+        const range = document.createRange();
+        range.selectNode(document.getElementById('donate-address'));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+      }
+    });
+  }
 })();
