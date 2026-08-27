@@ -1,9 +1,9 @@
 {
   "date": "2026-08-27",
   "title": "The Monk Who Wanted Cash",
-  "content": "He listened to a central bank promise cash.\n\nMaximum privacy. Structurally incapable of linking a person to a payment. Offline, only payer and payee. Online, the banks still see it. For AML. Target 2029, alongside cash. Civil society said the guarantees relied too heavily on institutional assurances rather than technical enforcement.\n\nHe poured the tea. A ledger, he thought, cannot be cash by promising not to look.",
-  "mantra": "Cash doesn't have a bank.",
-  "tags": ["digital-euro", "ecb", "privacy", "cbdc", "aml"],
+  "content": "He saw they were calling it cash.\n\nThey said nobody could see what you spent. Then they said the bank still sees it if you use it online.\n\nHe poured the tea. Cash, he thought, does not come with a bank statement.",
+  "mantra": "Ask your bank.",
+  "tags": ["digital-cash", "privacy", "banks"],
   "strip": "strips/2026-08-27.png",
-  "strip_title": "STRUCTURALLY INCAPABLE"
+  "strip_title": "LIKE CASH"
 }
