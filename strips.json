@@ -66,5 +66,9 @@
   "2026-10-01": {
     "file": "strips/2026-10-01.png",
     "title": "PHOTO"
+  },
+  "2026-10-02": {
+    "file": "strips/2026-10-02.png",
+    "title": "TARGET"
   }
 }
