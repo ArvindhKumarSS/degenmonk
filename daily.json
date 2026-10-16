@@ -1,17 +1,17 @@
 {
-  "date": "2026-10-14",
-  "title": "The Number",
-  "content": "Normie: I'll wait for the print.\nWhale: I already bought the quiet.",
-  "mantra": "You were awake. I was early.",
+  "date": "2026-10-16",
+  "title": "Spin Cycle",
+  "content": "If the Fed Chair said nothing all week, why did your bitcoin go through the spin cycle?",
+  "mantra": "He said fold. Sell everything again!",
   "tags": [
-    "cpi",
+    "fed",
     "inflation",
-    "whales",
-    "spot",
+    "rates",
+    "whipsaw",
+    "panic-selling",
     "normie",
-    "whale",
-    "waiting"
+    "fed-chair"
   ],
-  "strip": "strips/2026-10-14.png",
-  "strip_title": "THE NUMBER"
+  "strip": "strips/2026-10-16.png",
+  "strip_title": "SPIN CYCLE"
 }
