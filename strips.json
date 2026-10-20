@@ -130,5 +130,9 @@
   "2026-10-19": {
     "file": "strips/2026-10-19.png",
     "title": "EARLY"
+  },
+  "2026-10-20": {
+    "file": "strips/2026-10-20.png",
+    "title": "PAUSED"
   }
 }
